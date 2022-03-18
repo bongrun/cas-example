@@ -76,8 +76,8 @@ class Cas {
     _onInitializationListener = onInitializationListener;
     _logger = logger;
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    await _channel.invokeMethod('Initialize', {'appPackage': packageInfo.packageName, 'managerID': '1471041594', 'isTestBuild': isTestBuild, 'userID': userId});
     _channel.setMethodCallHandler(_platformCallHandler);
+    await _channel.invokeMethod('Initialize', {'appPackage': packageInfo.packageName, 'managerID': '1471041594', 'isTestBuild': isTestBuild, 'userID': userId});
     return unit;
   }
 
