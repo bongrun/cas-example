@@ -34,11 +34,11 @@ public class CleverAdsSolutions {
         CAS.settings.updateUser(consent: CASConsentStatus(rawValue: consent)!)
     }
 
-    public func showInterstitialAd(callback: CASCallback) {
+    public func showInterstitialAd(callback: AdContentDelegate) {
         manager?.presentInterstitial(fromRootViewController: rootViewController, callback: callback)
     }
 
-    public func showRewardedVideoAd(callback: CASCallback) {
+    public func showRewardedVideoAd(callback: AdContentDelegate) {
         manager?.presentRewardedAd(fromRootViewController: rootViewController, callback: callback)
     }
 
@@ -52,5 +52,40 @@ public class CleverAdsSolutions {
 
     public func validateIntegration() {
         return CAS.validateIntegration()
+    }
+}
+
+public class AdContentDelegate: CASCallback {
+    let placement: String
+    let channel: FlutterMethodChannel
+
+    init(placement: String, channel: FlutterMethodChannel) {
+        self.placement = placement
+        self.channel = channel
+    }
+
+    public func willShown(adStatus ad: CASImpression) {
+        print("TEST TEST")
+        channel.invokeMethod("onShown", arguments: [placement, ad.adType.toPrefix(), ad.network, ad.priceAccuracy, ad.cpm, ad.status, ad.error, ad.versionInfo, ad.identifier])
+    }
+
+    public func didShowAdFailed(error: String) {
+        print("TEST TEST")
+        channel.invokeMethod("onShowFailed", arguments: [placement, error])
+    }
+
+    public func didClickedAd() {
+        print("TEST TEST")
+        channel.invokeMethod("onClicked", arguments: placement)
+    }
+
+    public func didCompletedAd() {
+        print("TEST TEST")
+        channel.invokeMethod("onComplete", arguments: placement)
+    }
+
+    public func didClosedAd() {
+        print("TEST TEST")
+        channel.invokeMethod("onClosed", arguments: placement)
     }
 }
