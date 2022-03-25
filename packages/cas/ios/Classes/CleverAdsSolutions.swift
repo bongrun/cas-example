@@ -39,7 +39,9 @@ public class CleverAdsSolutions {
     }
 
     public func showRewardedVideoAd(callback: AdContentDelegate) {
+        print("444 111")
         manager?.presentRewardedAd(fromRootViewController: rootViewController, callback: callback)
+        print("444 222")
     }
 
     public func isAdReadyInterstitial() -> Bool {
