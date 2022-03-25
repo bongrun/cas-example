@@ -4,7 +4,8 @@ import CleverAdsSolutions
 public class CleverAdsSolutions {
     private var rootViewController: UIViewController
     private var manager: CASMediationManager?
-
+    private var delegateReward: AdContentDelegate?
+    
     init(rootViewController: UIViewController?) {
         self.rootViewController = rootViewController.unsafelyUnwrapped
         CAS.settings.setDebugMode(false)
@@ -19,7 +20,8 @@ public class CleverAdsSolutions {
             managerID: String,
             demoAdMode: Bool = false,
             userID: String = "",
-            onInit: CASInitializationCompletionHandler? = nil
+            onInit: CASInitializationCompletionHandler? = nil,
+            channel: FlutterMethodChannel
     ) {
         manager = CAS.create(
                 managerID: managerID,
@@ -28,6 +30,7 @@ public class CleverAdsSolutions {
                 userID: userID,
                 onInit: onInit
         )
+        delegateReward = AdContentDelegate(placement: "test", channel: channel)
     }
 
     public func setUserConsent(consent: Int) {
@@ -38,10 +41,10 @@ public class CleverAdsSolutions {
         manager?.presentInterstitial(fromRootViewController: rootViewController, callback: callback)
     }
 
-    public func showRewardedVideoAd(callback: AdContentDelegate) {
+    public func showRewardedVideoAd() {
         print("444 111")
-        print(callback == nil ? "null" : "not null")
-        manager?.presentRewardedAd(fromRootViewController: rootViewController, callback: callback)
+        print(delegateReward == nil ? "null" : "not null")
+        manager?.presentRewardedAd(fromRootViewController: rootViewController, callback: delegateReward)
         print("444 222")
     }
 
