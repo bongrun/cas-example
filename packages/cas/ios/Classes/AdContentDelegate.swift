@@ -5,8 +5,10 @@ public class AdContentDelegate: CASCallback {
     let channel: FlutterMethodChannel
 
     init(placement: String, channel: FlutterMethodChannel) {
+        print("INIT 111")
         self.placement = placement
         self.channel = channel
+        print("INIT 222")
     }
 
     public func willShown(adStatus ad: CASImpression) {
