@@ -31,10 +31,18 @@ public class SwiftCasPlugin: NSObject, FlutterPlugin {
             )
         case "ShowInterstitialAd":
             args = call.arguments as! Dictionary<String, Any>
-            SwiftCasPlugin.cleverAdsSolutions.showInterstitialAd(callback: AdContentDelegate(placement: args["placement"] as! String, channel: SwiftCasPlugin._channel!))
+            let adContentDelegate = AdContentDelegate(placement: args["placement"] as! String, channel: SwiftCasPlugin._channel!)
+            SwiftCasPlugin.cleverAdsSolutions.showInterstitialAd(callback: adContentDelegate)
         case "ShowRewardedVideoAd":
+            print("111")
             args = call.arguments as! Dictionary<String, Any>
-            SwiftCasPlugin.cleverAdsSolutions.showRewardedVideoAd(callback: AdContentDelegate(placement: args["placement"] as! String, channel: SwiftCasPlugin._channel!))
+            print("222")
+            let adContentDelegate = AdContentDelegate(placement: args["placement"] as! String, channel: SwiftCasPlugin._channel!)
+            print("333")
+            print(adContentDelegate == nil ? "null" : "not null")
+            print("444")
+            SwiftCasPlugin.cleverAdsSolutions.showRewardedVideoAd(callback: adContentDelegate)
+            print("555")
         case "SetUserGdprConsent":
             args = call.arguments as! Dictionary<String, Any>
             SwiftCasPlugin.cleverAdsSolutions.setUserConsent(consent: args["consent"] as! Int)
