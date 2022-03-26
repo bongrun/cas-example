@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
         await Future.delayed(const Duration(seconds: 1));
       }
     }
-    await Cas.showRewardedVideoAd(
+    await Cas.showInterstitialAd(
       'testplacement',
       onShown: (CasAdType type, String network, CasPriceAccuracy priceAccuracy, double cpm, String status, String error, String versionInfo, String identifier) {
         if (error != '') {

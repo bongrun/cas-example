@@ -1,38 +1,34 @@
 import CleverAdsSolutions
 
 public class AdContentDelegate: CASCallback {
-    let placement: String
+    var placement: String?
     let channel: FlutterMethodChannel
 
-    init(placement: String, channel: FlutterMethodChannel) {
-        print("INIT 111")
-        self.placement = placement
+    init(channel: FlutterMethodChannel) {
         self.channel = channel
-        print("INIT 222")
+    }
+
+    public func setPlacement(placement: String) {
+        self.placement = placement
     }
 
     public func willShown(adStatus ad: CASImpression) {
-        print("TEST TEST")
-        channel.invokeMethod("onShown", arguments: [placement, ad.adType.toPrefix(), ad.network, ad.priceAccuracy, ad.cpm, ad.status, ad.error, ad.versionInfo, ad.identifier])
+        channel.invokeMethod("onShown", arguments: [placement!, ad.adType.toPrefix(), ad.network, ad.priceAccuracy, ad.cpm, ad.status, ad.error, ad.versionInfo, ad.identifier])
     }
 
     public func didShowAdFailed(error: String) {
-        print("TEST TEST")
-        channel.invokeMethod("onShowFailed", arguments: [placement, error])
+        channel.invokeMethod("onShowFailed", arguments: [placement!, error])
     }
 
     public func didClickedAd() {
-        print("TEST TEST")
-        channel.invokeMethod("onClicked", arguments: placement)
+        channel.invokeMethod("onClicked", arguments: placement!)
     }
 
     public func didCompletedAd() {
-        print("TEST TEST")
-        channel.invokeMethod("onComplete", arguments: placement)
+        channel.invokeMethod("onComplete", arguments: placement!)
     }
 
     public func didClosedAd() {
-        print("TEST TEST")
-        channel.invokeMethod("onClosed", arguments: placement)
+        channel.invokeMethod("onClosed", arguments: placement!)
     }
 }

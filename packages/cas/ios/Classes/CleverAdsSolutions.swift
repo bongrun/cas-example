@@ -4,7 +4,7 @@ import CleverAdsSolutions
 public class CleverAdsSolutions {
     private var rootViewController: UIViewController
     private var manager: CASMediationManager?
-    private var delegateReward: AdContentDelegate?
+    private var delegate: AdContentDelegate?
     
     init(rootViewController: UIViewController?) {
         self.rootViewController = rootViewController.unsafelyUnwrapped
@@ -30,22 +30,21 @@ public class CleverAdsSolutions {
                 userID: userID,
                 onInit: onInit
         )
-        delegateReward = AdContentDelegate(placement: "test", channel: channel)
+        delegate = AdContentDelegate(channel: channel)
     }
 
     public func setUserConsent(consent: Int) {
         CAS.settings.updateUser(consent: CASConsentStatus(rawValue: consent)!)
     }
 
-    public func showInterstitialAd(callback: AdContentDelegate) {
-        manager?.presentInterstitial(fromRootViewController: rootViewController, callback: callback)
+    public func showInterstitialAd(placement: String) {
+        delegate!.setPlacement(placement: placement)
+        manager?.presentInterstitial(fromRootViewController: rootViewController, callback: delegate)
     }
 
-    public func showRewardedVideoAd() {
-        print("444 111")
-        print(delegateReward == nil ? "null" : "not null")
-        manager?.presentRewardedAd(fromRootViewController: rootViewController, callback: delegateReward)
-        print("444 222")
+    public func showRewardedVideoAd(placement: String) {
+        delegate!.setPlacement(placement: placement)
+        manager?.presentRewardedAd(fromRootViewController: rootViewController, callback: delegate)
     }
 
     public func isAdReadyInterstitial() -> Bool {
