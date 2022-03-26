@@ -13,22 +13,27 @@ public class AdContentDelegate: CASCallback {
     }
 
     public func willShown(adStatus ad: CASImpression) {
+        print("onShown")
         channel.invokeMethod("onShown", arguments: [placement!, ad.adType.toPrefix(), ad.network, ad.priceAccuracy, ad.cpm, ad.status, ad.error, ad.versionInfo, ad.identifier])
     }
 
     public func didShowAdFailed(error: String) {
+        print("onShowFailed")
         channel.invokeMethod("onShowFailed", arguments: [placement!, error])
     }
 
     public func didClickedAd() {
+        print("onClicked")
         channel.invokeMethod("onClicked", arguments: placement!)
     }
 
     public func didCompletedAd() {
+        print("onComplete")
         channel.invokeMethod("onComplete", arguments: placement!)
     }
 
     public func didClosedAd() {
+        print("onClosed")
         channel.invokeMethod("onClosed", arguments: placement!)
     }
 }
