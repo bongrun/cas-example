@@ -5,7 +5,7 @@ public class CleverAdsSolutions {
     private var rootViewController: UIViewController
     private var manager: CASMediationManager?
     private var delegate: AdContentDelegate?
-    
+
     init(rootViewController: UIViewController?) {
         self.rootViewController = rootViewController.unsafelyUnwrapped
         CAS.settings.setDebugMode(false)

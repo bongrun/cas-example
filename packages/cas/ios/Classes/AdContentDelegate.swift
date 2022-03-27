@@ -12,9 +12,9 @@ public class AdContentDelegate: CASCallback {
         self.placement = placement
     }
 
-    public func willShown(adStatus ad: CASImpression) {
+    public func willShown(ad adStatus: CASStatusHandler) {
         print("onShown")
-        channel.invokeMethod("onShown", arguments: [placement!, ad.adType.toPrefix(), ad.network, ad.priceAccuracy, ad.cpm, ad.status, ad.error, ad.versionInfo, ad.identifier])
+        channel.invokeMethod("onShown", arguments: [placement!, adStatus.adType.toPrefix(), adStatus.network, adStatus.priceAccuracy.rawValue, adStatus.cpm, adStatus.status, adStatus.error, adStatus.versionInfo, adStatus.identifier])
     }
 
     public func didShowAdFailed(error: String) {
